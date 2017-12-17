@@ -22,13 +22,13 @@ pir.watch(function(err, value) {
     if (continueAck) {
       continueAck = false;
       actionInProgress = true;
-      ack(() => {
+      ack(false, () => {
         actionInProgress = false;
       });
     } else {
       if (value === 1) {
         actionInProgress = true;
-        ack(() => {
+        ack(true, () => {
           actionInProgress = false;
         });
       }
@@ -41,11 +41,13 @@ console.log(':: ready');
 
 // lib
 
-function ack(callback) {
+function ack(newAck, callback) {
 
   let timeHash = getHash();
   console.log('>> motion ack', timeHash);
-  notify(`motion ack ${timeHash}`);
+  if (newAck) {
+    notify(`motion ack ${timeHash}`);
+  }
 
   record(timeHash, () => {
 
