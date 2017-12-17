@@ -1,0 +1,24 @@
+{
+  "name": "capsule",
+  "version": "1.0.0",
+  "description": "security system",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/davidegaspar/capsule.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/davidegaspar/capsule/issues"
+  },
+  "homepage": "https://github.com/davidegaspar/capsule#readme",
+  "dependencies": {
+    "aws-sdk": "^2.171.0",
+    "mkdirp": "^0.5.1",
+    "rimraf": "^2.6.2"
+  }
+}
