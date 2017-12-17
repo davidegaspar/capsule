@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 const AWS = require('aws-sdk');
 const onoff = require('onoff');
 const child_process_exec = require('child_process').exec;
