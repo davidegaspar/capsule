@@ -9,53 +9,64 @@ const config = require('./config');
 let pir = new onoff.Gpio(15, 'in', 'both');
 let actionInProgress = false;
 let continueAck = false;
+let space = '                        ';
 
 // main
 pir.watch(function(err, value) {
   // if (err) exit();
 
+  let timeHash = getHash();
+  console.log(`${actionInProgress?'>':' '}${value}${continueAck?'>':' '} ${timeHash} motion`);
+
   if (actionInProgress) {
+
     if (value === 1) {
+
       continueAck = true;
+      console.log(`${actionInProgress?'>':' '}${value}${continueAck?'>':' '} ${space} continue`);
     }
   } else {
     if (continueAck) {
+
       continueAck = false;
       actionInProgress = true;
-      ack(false, () => {
+      console.log(`${actionInProgress?'>':' '}${value}${continueAck?'>':' '} ${space} ack`);
+
+      ack(timeHash, () => {
         actionInProgress = false;
       });
     } else {
+
       if (value === 1) {
+
         actionInProgress = true;
-        ack(true, () => {
+        console.log(`${actionInProgress?'>':' '}${value}${continueAck?'>':' '} ${space} notify + ack`);
+
+        notify(`motion ack ${timeHash}`);
+        ack(timeHash, () => {
           actionInProgress = false;
         });
       }
     }
   }
 
+
+
 });
 
-console.log(':: ready');
+console.log('::: ready');
 
 // lib
 
-function ack(newAck, callback) {
+function ack(hash, callback) {
 
-  let timeHash = getHash();
-  console.log('>> motion ack', timeHash);
-  if (newAck) {
-    notify(`motion ack ${timeHash}`);
-  }
-
-  record(timeHash, () => {
+  record(hash, () => {
 
     callback();
 
-    uploadAndClean(timeHash, () => {
+    uploadAndClean(hash, () => {
 
-      console.log('== motion complete', timeHash);
+      console.log(`--- ${hash} done`);
     });
   });
 }
@@ -92,7 +103,7 @@ function notify(msg){
   };
   sns.publish(params, function(err, data) {
     if (err) console.log(err.message);
-    else     console.log(`-- ${msg}`);
+    // else     console.log(`-- ${msg}`);
   });
 }
 
