@@ -55,7 +55,7 @@ function ack(newAck, callback) {
 
     uploadAndClean(timeHash, () => {
 
-      console.log('>> motion complete', timeHash);
+      console.log('== motion complete', timeHash);
     });
   });
 }
@@ -92,7 +92,7 @@ function notify(msg){
   };
   sns.publish(params, function(err, data) {
     if (err) console.log(err.message);
-    else     console.log(data);
+    else     console.log(`-- ${msg}`);
   });
 }
 
