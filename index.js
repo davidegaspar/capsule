@@ -49,9 +49,6 @@ pir.watch(function(err, value) {
       }
     }
   }
-
-
-
 });
 
 console.log('::: ready');
@@ -102,8 +99,12 @@ function notify(msg){
     TopicArn: config.sns_arn
   };
   sns.publish(params, function(err, data) {
-    if (err) console.log(err.message);
-    // else     console.log(`-- ${msg}`);
+    if (err) {
+      // console.log(err.message);
+      console.log(`err ${space} notify`);
+    } else {
+      // console.log(`-- ${msg}`);
+    }
   });
 }
 
@@ -117,7 +118,8 @@ function exec(cmd, cwd, callback) {
     (err, stdout, stderr) => {
       // console.log(cmd, cwd);
       if (err) {
-        console.log(err);
+        // console.log(err);
+        console.log(`err ${cmd.substr(0, 24)}`);
       }else {
         // console.log(stdout);
         // console.log(stderr);
