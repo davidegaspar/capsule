@@ -52,6 +52,7 @@ pir.watch(function(err, value) {
 });
 
 console.log('::: ready');
+notify(`ready`);
 
 // lib
 
