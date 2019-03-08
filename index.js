@@ -3,6 +3,7 @@
 const AWS = require('aws-sdk');
 const onoff = require('onoff');
 const child_process_exec = require('child_process').exec;
+const logger = require('./modules/logger');
 const config = require('./config');
 
 // setup
@@ -16,21 +17,21 @@ pir.watch(function(err, value) {
   // if (err) exit();
 
   let timeHash = getHash();
-  console.log(`${actionInProgress?'>':' '}${value}${continueAck?'>':' '} ${timeHash} motion`);
+  logger.info(`${actionInProgress?'>':' '}${value}${continueAck?'>':' '} ${timeHash} motion`);
 
   if (actionInProgress) {
 
     if (value === 1) {
 
       continueAck = true;
-      console.log(`${actionInProgress?'>':' '}${value}${continueAck?'>':' '} ${space} continue`);
+      logger.info(`${actionInProgress?'>':' '}${value}${continueAck?'>':' '} ${space} continue`);
     }
   } else {
     if (continueAck) {
 
       continueAck = false;
       actionInProgress = true;
-      console.log(`${actionInProgress?'>':' '}${value}${continueAck?'>':' '} ${space} ack`);
+      logger.info(`${actionInProgress?'>':' '}${value}${continueAck?'>':' '} ${space} ack`);
 
       ack(timeHash, () => {
         actionInProgress = false;
@@ -40,7 +41,7 @@ pir.watch(function(err, value) {
       if (value === 1) {
 
         actionInProgress = true;
-        console.log(`${actionInProgress?'>':' '}${value}${continueAck?'>':' '} ${space} notify + ack`);
+        logger.info(`${actionInProgress?'>':' '}${value}${continueAck?'>':' '} ${space} notify + ack`);
 
         notify(`motion ack ${timeHash}`);
         ack(timeHash, () => {
@@ -51,7 +52,7 @@ pir.watch(function(err, value) {
   }
 });
 
-console.log('::: ready');
+logger.info('::: ready');
 notify(`ready`);
 
 // lib
@@ -64,7 +65,7 @@ function ack(hash, callback) {
 
     uploadAndClean(hash, () => {
 
-      console.log(`--- ${hash} done`);
+      logger.info(`--- ${hash} done`);
     });
   });
 }
@@ -101,10 +102,10 @@ function notify(msg){
   };
   sns.publish(params, function(err, data) {
     if (err) {
-      // console.log(err.message);
-      console.log(`err ${space} notify`);
+      // logger.info(err.message);
+      logger.info(`err ${space} notify`);
     } else {
-      // console.log(`-- ${msg}`);
+      // logger.info(`-- ${msg}`);
     }
   });
 }
@@ -117,13 +118,13 @@ function exec(cmd, cwd, callback) {
       shell: '/bin/sh'
     },
     (err, stdout, stderr) => {
-      // console.log(cmd, cwd);
+      // logger.info(cmd, cwd);
       if (err) {
-        // console.log(err);
-        console.log(`err ${cmd.substr(0, 24)}`);
+        logger.error(err);
+        logger.info(`err ${cmd.substr(0, 24)}`);
       }else {
-        // console.log(stdout);
-        // console.log(stderr);
+        // logger.info(stdout);
+        // logger.info(stderr);
       }
       callback();
     }

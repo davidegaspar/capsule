@@ -19,6 +19,7 @@
   "dependencies": {
     "aws-sdk": "^2.171.0",
     "mkdirp": "^0.5.1",
-    "rimraf": "^2.6.2"
+    "rimraf": "^2.6.2",
+    "winston": "^3.2.1"
   }
 }
