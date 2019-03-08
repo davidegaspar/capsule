@@ -11,7 +11,7 @@ module.exports = winston.createLogger({
   level: process.env.LOG_LEVEL || 'info',
   format: winston.format.simple(),
   transports: [
-    new winston.transports.File({ filename: `${hash}-error.log`, level: 'error' }),
-    new winston.transports.File({ filename: `${hash}-info.log`, level: 'info' }),
+    new winston.transports.File({ filename: `/home/pi/tmp/${hash}-error.log`, level: 'error' }),
+    new winston.transports.File({ filename: `/home/pi/tmp/${hash}-info.log`, level: 'info' }),
   ],
 });
