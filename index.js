@@ -73,7 +73,7 @@ function record(hash, callback){
 
   exec(`mkdir -p ${hash}`, '/home/pi/tmp', () => {
 
-    exec(`raspistill -w 1920 -h 1440 -q 10 -t 10000 -tl 1000 -o %02d.jpg`, `/home/pi/tmp/${hash}`, callback);
+    exec(`raspistill -w 1920 -h 1440 -q 10 -t 60000 -tl 1000 -o %02d.jpg`, `/home/pi/tmp/${hash}`, callback);
   });
 }
 
