@@ -1,6 +1,12 @@
 # capsule
 security system
 
+## raspi setup
+```sh
+# enable camera
+raspi-config
+```
+
 ## install
 
 ```
