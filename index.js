@@ -4,7 +4,9 @@ const AWS = require('aws-sdk');
 const onoff = require('onoff');
 const child_process_exec = require('child_process').exec;
 const logger = require('./modules/logger');
-const config = require('./config');
+
+// config
+const SNS_ARN = process.env.SNS_ARN
 
 // setup
 let pir = new onoff.Gpio(15, 'in', 'both');
@@ -98,7 +100,7 @@ function notify(msg){
   let params = {
     Message: msg,
     Subject: 'capsule',
-    TopicArn: config.sns_arn
+    TopicArn: SNS_ARN
   };
   sns.publish(params, function(err, data) {
     if (err) {
