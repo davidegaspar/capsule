@@ -6,9 +6,9 @@ WORKDIR /app
 
 ADD index.js .
 ADD package.json .
+ADD package-lock.json .
 ADD modules modules
 
-RUN npm install
-RUN npm install onoff --save
+RUN npm ci
 
-CMD ["node", "index.js"]
+CMD ["npm", "start"]

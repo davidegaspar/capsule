@@ -1,5 +1,6 @@
 # capsule
-security system
+
+pir + raspi cam + s3 + sns
 
 ## raspi setup
 ```sh
@@ -9,25 +10,24 @@ raspi-config
 
 ## install
 
+this project includes packages that can only be build inside a specific docker container.
+
 ```
-npm i
-npm install onoff
+docker build -t capsule-build -f Dockerfile.build .
+docker rm capsule-build
+docker run -it --name capsule-build -v ${PWD}:/app capsule-build /bin/sh
+# now packages can be installed
 ```
 
-## service
+## build
 ```
-sudo cp capsule /etc/init.d/capsule
-sudo chmod +x /etc/init.d/capsule
-sudo /etc/init.d/capsule start
-sudo /etc/init.d/capsule stop
-sudo update-rc.d capsule defaults
+docker build -t capsule -f Dockerfile .
 ```
 
-
-## stuff
+## run (raspi)
 ```
-docker build -t capsule .
 docker run -it capsule /bin/sh
+docker run -it --privileged capsule
 ```
 
 ## .env
