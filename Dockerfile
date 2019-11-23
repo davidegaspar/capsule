@@ -4,10 +4,7 @@ RUN apk add g++ make python3
 
 WORKDIR /app
 
-ADD index.js .
-ADD package.json .
-ADD package-lock.json .
-ADD modules modules
+ADD app .
 
 RUN npm ci
 
