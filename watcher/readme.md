@@ -22,8 +22,7 @@ SNS_ARN=...
 docker run -d --name watcher --privileged --pid=host --restart unless-stopped --env-file .env watcher
 docker logs -f watcher
 # cleanup
-docker stop watcher
-docker rm watcher
+docker stop watcher && docker rm watcher
 ```
 
 ## Publish

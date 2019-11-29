@@ -24,8 +24,7 @@ docker run -d --name uploader --restart unless-stopped --env-file .env -v /root/
 docker run -it --rm --name uploader --env-file .env -v /root/raspistill/:/app uploader /bin/sh
 docker logs -f uploader
 # cleanup
-docker stop uploader
-docker rm uploader
+docker stop uploader && docker rm uploader
 ```
 
 ## Publish
