@@ -6,5 +6,6 @@ RUN go get -u github.com/radovskyb/watcher
 RUN go build -o uploader .
 
 FROM alpine:3.10
+WORKDIR /app
 # RUN apk add --update ca-certificates
 COPY --from=build /go/src/github.com/davidegaspar/uploader/uploader /usr/local/bin/
