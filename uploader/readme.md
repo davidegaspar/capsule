@@ -1,5 +1,7 @@
 # uploader
 
+Watches the `raspistill` folder and uploads `.jpg` to `S3`.
+
 ## Build (raspi only)
 
 ```sh
@@ -24,4 +26,12 @@ docker logs -f uploader
 # cleanup
 docker stop uploader
 docker rm uploader
+```
+
+## Publish
+```sh
+docker login docker.pkg.github.com -u davidegaspar -p $GITHUB_TOKEN
+docker tag uploader docker.pkg.github.com/davidegaspar/capsule/uploader:latest
+docker push docker.pkg.github.com/davidegaspar/capsule/uploader:latest
+docker pull docker.pkg.github.com/davidegaspar/capsule/uploader:latest
 ```
