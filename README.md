@@ -21,13 +21,6 @@ raspi-config
 docker build -t capsule -f Dockerfile .
 ```
 
-## Publish
-```sh
-docker login docker.pkg.github.com -u davidegaspar -p $GITHUB_TOKEN
-docker tag capsule docker.pkg.github.com/davidegaspar/capsule/capsule:latest
-docker push docker.pkg.github.com/davidegaspar/capsule/capsule:latest
-```
-
 ## Run (raspi only)
 
 #### .env
@@ -39,12 +32,19 @@ SNS_ARN=...
 
 #### usage
 ```sh
-docker pull docker.pkg.github.com/davidegaspar/capsule/capsule:latest
 docker run -d --name capsule --privileged --pid=host --restart unless-stopped --env-file .env capsule
 docker logs -f capsule
 # cleanup
 docker stop capsule
 docker rm capsule
+```
+
+## Publish
+```sh
+docker login docker.pkg.github.com -u davidegaspar -p $GITHUB_TOKEN
+docker tag capsule docker.pkg.github.com/davidegaspar/capsule/capsule:latest
+docker push docker.pkg.github.com/davidegaspar/capsule/capsule:latest
+docker pull docker.pkg.github.com/davidegaspar/capsule/capsule:latest
 ```
 
 ## Local development
