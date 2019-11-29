@@ -29,7 +29,8 @@ func main() {
 		for {
 			select {
 			case event := <-w.Event:
-				fmt.Println(event) // Print the event's info.
+				fmt.Println(event.Path) // Print the event's info.
+				fmt.Println(event.FileInfo.Name()) // Print the event's info.
 			case err := <-w.Error:
 				log.Fatalln(err)
 			case <-w.Closed:
