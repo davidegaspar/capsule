@@ -7,5 +7,6 @@ RUN go build -o uploader .
 
 FROM alpine:3.10
 WORKDIR /app
+CMD ["uploader"]
 # RUN apk add --update ca-certificates
 COPY --from=build /go/src/github.com/davidegaspar/uploader/uploader /usr/local/bin/
