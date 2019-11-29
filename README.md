@@ -39,7 +39,7 @@ SNS_ARN=...
 #### usage
 ```sh
 docker pull docker.pkg.github.com/davidegaspar/capsule/capsule:latest
-docker run -d --name capsule --privileged --restart unless-stopped --env-file .env capsule
+docker run -d --name capsule --privileged --pid=host --restart unless-stopped --env-file .env docker.pkg.github.com/davidegaspar/capsule/capsule:latest
 docker logs -f capsule
 # cleanup
 docker stop capsule
@@ -57,8 +57,7 @@ docker build -t capsule-build -f Dockerfile.build .
 
 #### usage
 ```sh
-docker run -it --name capsule-build -v ${PWD}/app:/app capsule-build /bin/sh
+docker run -it --rm --name capsule-build -v ${PWD}/app:/app capsule-build /bin/sh
 # now packages can be installed
 # npm install ...
-docker rm capsule-build
 ```

@@ -7,12 +7,14 @@ const logger = require('./modules/logger');
 
 // config
 const SNS_ARN = process.env.SNS_ARN
+logger.info('::: config');
 
 // setup
 let pir = new onoff.Gpio(15, 'in', 'both');
 let actionInProgress = false;
 let continueAck = false;
 let space = '                        ';
+logger.info('::: setup');
 
 // main
 pir.watch(function(err, value) {
@@ -76,16 +78,16 @@ function record(hash, callback){
 
   exec(`mkdir -p ${hash}`, '/home/pi/tmp', () => {
 
-    exec(`raspistill -w 1920 -h 1440 -q 10 -t 60000 -tl 1000 -o %02d.jpg`, `/home/pi/tmp/${hash}`, callback);
+    exec(`nsenter -t 1 -m -u -n -i -- raspistill -w 1920 -h 1440 -q 10 -t 60000 -tl 1000 -o %02d.jpg`, `/tmp/${hash}`, callback);
   });
 }
 
 function uploadAndClean(hash, callback){
 
-  exec(`aws s3 cp --recursive ${hash} s3://capsule.davidegaspar.com/${hash}`, `/home/pi/tmp`, () => {
-
-    exec(`rm -rf ${hash}`, '/home/pi/tmp', callback);
-  });
+  // exec(`aws s3 cp --recursive ${hash} s3://capsule.davidegaspar.com/${hash}`, `/home/pi/tmp`, () => {
+  //
+  //   exec(`rm -rf ${hash}`, '/home/pi/tmp', callback);
+  // });
 }
 
 function getHash(){
