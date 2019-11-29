@@ -24,3 +24,10 @@ func getFirstFile(dir string, ext string) (os.FileInfo) {
 
   return file
 }
+
+func removeFile(name string)  {
+  err := os.Remove(name)
+  if err != nil {
+    log.Fatal(err)
+  }
+}

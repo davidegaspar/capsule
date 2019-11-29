@@ -8,15 +8,17 @@ import (
 func main() {
 
     for {
-        fmt.Println("checking...")
         file := getFirstFile(".",".jpg")
         if file != nil {
-          fmt.Println(file.Name())
+          fmt.Printf(file.Name())
           // upload to s3
-          // delete file
+          fmt.Printf("...uploaded")
+          removeFile(file.Name())
+          fmt.Printf("...deleted.\n")
+          time.Sleep(time.Second)
         } else {
-          fmt.Println("no files")
+          fmt.Printf("no files found.\n")
+          time.Sleep(time.Second * 10)
         }
-        time.Sleep(time.Second * 10)
     }
 }
