@@ -76,10 +76,11 @@ function ack(hash, callback) {
 
 function record(hash, callback){
 
-  exec(`mkdir -p ${hash}`, '/home/pi/tmp', () => {
-
-    exec(`nsenter -t 1 -m -u -n -i -- raspistill -w 1920 -h 1440 -q 10 -t 60000 -tl 1000 -o %02d.jpg`, `/tmp/${hash}`, callback);
-  });
+  // exec(`mkdir -p ${hash}`, '/home/pi/tmp', () => {
+  //
+  //
+  // });
+  exec(`nsenter -t 1 -m -u -n -i -- raspistill -w 1920 -h 1440 -q 10 -t 60000 -tl 1000 -o %02d.jpg`, `/tmp/${hash}`, callback);
 }
 
 function uploadAndClean(hash, callback){

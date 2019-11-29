@@ -15,12 +15,13 @@ curl -sSL https://get.docker.com | sh
 raspi-config
 ```
 
-## Build
+## Build (raspi only)
+
 ```sh
 docker build -t capsule -f Dockerfile .
 ```
 
-## Publish (from local)
+## Publish
 ```sh
 docker login docker.pkg.github.com -u davidegaspar -p $GITHUB_TOKEN
 docker tag capsule docker.pkg.github.com/davidegaspar/capsule/capsule:latest
@@ -39,7 +40,7 @@ SNS_ARN=...
 #### usage
 ```sh
 docker pull docker.pkg.github.com/davidegaspar/capsule/capsule:latest
-docker run -d --name capsule --privileged --pid=host --restart unless-stopped --env-file .env docker.pkg.github.com/davidegaspar/capsule/capsule:latest
+docker run -d --name capsule --privileged --pid=host --restart unless-stopped --env-file .env capsule
 docker logs -f capsule
 # cleanup
 docker stop capsule
