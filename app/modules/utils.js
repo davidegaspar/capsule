@@ -69,9 +69,9 @@ const ack = function (hash, callback) {
 
 const record = function (hash, callback){
 
-  exec(`nsenter -t 1 -m -u -n -i -- mkdir -p capsule`, '.', () => {
+  exec(`nsenter -t 1 -m -u -n -i -- mkdir -p /root/raspistill/`, '.', () => {
 
-    exec(`nsenter -t 1 -m -u -n -i -- raspistill -w 1920 -h 1440 -q 10 -t 10000 -tl 1000 -o capsule/${hash}%02d.jpg`, `.`, callback);
+    exec(`nsenter -t 1 -m -u -n -i -- raspistill -w 1920 -h 1440 -q 10 -t 10000 -tl 1000 -o /root/raspistill/${hash}%02d.jpg`, `.`, callback);
   });
 }
 
