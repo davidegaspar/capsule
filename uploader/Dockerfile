@@ -6,7 +6,7 @@ RUN go get -u github.com/aws/aws-sdk-go/aws
 RUN go build -o uploader .
 
 FROM alpine:3.10
+RUN apk add --update ca-certificates
 WORKDIR /app
 CMD ["uploader"]
-RUN apk add --update ca-certificates
 COPY --from=build /go/src/github.com/davidegaspar/uploader/uploader /usr/local/bin/
