@@ -1,6 +1,8 @@
 const AWS = require('aws-sdk');
 const child_process_exec = require('child_process').exec;
 
+const SNS_ARN = process.env.SNS_ARN
+
 const getHash = function (){
   let now = new Date()
   return now.toJSON();

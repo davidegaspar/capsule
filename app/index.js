@@ -4,10 +4,6 @@ const onoff = require('onoff');
 const logger = require('./modules/logger');
 const { getHash, notify, ack } = require('./modules/utils');
 
-// config
-const SNS_ARN = process.env.SNS_ARN
-logger.info('::: config');
-
 // setup
 let pir = new onoff.Gpio(15, 'in', 'both');
 let actionInProgress = false;
