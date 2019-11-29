@@ -1,4 +1,5 @@
 const AWS = require('aws-sdk');
+const logger = require('./logger');
 const child_process_exec = require('child_process').exec;
 
 const SNS_ARN = process.env.SNS_ARN
