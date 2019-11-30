@@ -41,8 +41,8 @@ const exec = function (cmd, cwd, callback) {
         logger.error(err);
         logger.info(`err ${cmd.substr(0, 24)}`);
       }else {
-        logger.info(stdout);
-        logger.info(stderr);
+        // logger.info(stdout);
+        // logger.info(stderr);
       }
       callback();
     }
