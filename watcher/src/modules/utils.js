@@ -49,39 +49,13 @@ const exec = function (cmd, cwd, callback) {
   )
 }
 
-// function exit() {
-//   pir.unexport();
-//   process.exit();
-// }
-
-const ack = function (hash, callback) {
-
-  record(hash, () => {
-
-    callback();
-
-    uploadAndClean(hash, () => {
-
-      logger.info(`--- ${hash} done`);
-    });
-  });
+const setup = function (){
+  exec(`nsenter -t 1 -m -u -n -i -- mkdir -p /root/raspistill/`, '.', () => {});
 }
 
-const record = function (hash, callback){
-
-  exec(`nsenter -t 1 -m -u -n -i -- mkdir -p /root/raspistill/`, '.', () => {
-
-    exec(`nsenter -t 1 -m -u -n -i -- raspistill -w 1920 -h 1440 -q 10 -t 10000 -tl 1000 -o /root/raspistill/${hash}%02d.jpg`, `.`, callback);
-  });
+const startRecording = function (hash, callback){
+  let timeInSeconds = 10
+  exec(`nsenter -t 1 -m -u -n -i -- raspistill -w 1920 -h 1440 -q 10 -t ${timeInSeconds * 1000} -tl 1000 -o /root/raspistill/${hash}%02d.jpg`, `.`, callback);
 }
 
-const uploadAndClean = function (hash, callback){
-
-  // exec(`aws s3 cp --recursive ${hash} s3://capsule.davidegaspar.com/${hash}`, `/home/pi/tmp`, () => {
-  //
-  //   exec(`rm -rf ${hash}`, '/home/pi/tmp', callback);
-  // });
-}
-
-
-module.exports = { getHash, notify, exec, ack, record, uploadAndClean }
+module.exports = { getHash, notify, exec, startRecording, setup }

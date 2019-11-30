@@ -2,54 +2,36 @@
 
 const onoff = require('onoff');
 const logger = require('./modules/logger');
-const { getHash, notify, ack } = require('./modules/utils');
+const { getHash, notify, startRecording, setup } = require('./modules/utils');
 
 // setup
 let pir = new onoff.Gpio(15, 'in', 'both');
-let actionInProgress = false;
-let continueAck = false;
-let space = '                        ';
-logger.info('::: setup');
+setup()
 
 // main
+let actionInProgress = false;
 pir.watch(function(err, value) {
-  // if (err) exit();
+
+  if (err) {
+    logger.err(err)
+  }
 
   let timeHash = getHash();
-  logger.info(`${actionInProgress?'>':' '}${value}${continueAck?'>':' '} ${timeHash} motion`);
 
-  if (actionInProgress) {
+  if (value && !actionInProgress) {
 
-    if (value === 1) {
+    logger.info('Motion detected.')
+    actionInProgress = true;
 
-      continueAck = true;
-      logger.info(`${actionInProgress?'>':' '}${value}${continueAck?'>':' '} ${space} continue`);
-    }
-  } else {
-    if (continueAck) {
+    logger.info('Recording started...')
+    startRecording(timeHash, () => {
 
-      continueAck = false;
-      actionInProgress = true;
-      logger.info(`${actionInProgress?'>':' '}${value}${continueAck?'>':' '} ${space} ack`);
-
-      ack(timeHash, () => {
-        actionInProgress = false;
-      });
-    } else {
-
-      if (value === 1) {
-
-        actionInProgress = true;
-        logger.info(`${actionInProgress?'>':' '}${value}${continueAck?'>':' '} ${space} notify + ack`);
-
-        notify(`motion ack ${timeHash}`);
-        ack(timeHash, () => {
-          actionInProgress = false;
-        });
-      }
-    }
+      actionInProgress = false;
+      logger.info('Recording done.')
+    });
+    // notify(`motion ack ${timeHash}`);
   }
 });
 
-logger.info('::: ready');
+logger.info('Ready.');
 // notify(`ready`);
