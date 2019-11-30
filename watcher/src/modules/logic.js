@@ -14,12 +14,12 @@ const logic = function(err, value) {
   if (value) {
 
     logger.info('Motion detected.')
-    logger.warn(lastTriggerTime)
-    let now = Date.now()
+
+    let triggerTime = Date.now()
 
     if (!actionInProgress) {
 
-      if (now - lastTriggerTime < oneMinute) {
+      if (triggerTime - lastTriggerTime < oneMinute) {
 
         logger.info('Motion detected again within 1min.')
         logger.info('Recording...')
@@ -32,7 +32,7 @@ const logic = function(err, value) {
       }
     }
 
-    lastTriggerTime = now
+    lastTriggerTime = triggerTime
   }
 }
 
