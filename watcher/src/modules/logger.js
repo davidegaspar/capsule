@@ -1,9 +1,14 @@
-const winston = require('winston');
+const { createLogger, format, transports } = require('winston');
+const { combine, timestamp, label, printf } = format;
 
-module.exports = winston.createLogger({
+const logger = createLogger({
   level: process.env.LOG_LEVEL || 'info',
-  format: winston.format.simple(),
-  transports: [
-    new (winston.transports.Console)({'timestamp':true})
-  ],
+  format: combine(
+    label(),
+    timestamp(),
+    printf()
+  ),
+  transports: [new transports.Console()]
 });
+
+module.exports = logger
