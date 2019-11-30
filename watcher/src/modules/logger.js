@@ -1,11 +1,11 @@
 const { createLogger, format, transports } = require('winston');
-const { combine, timestamp, label, prettyPrint } = format;
+const { combine, timestamp, json } = format;
 
 const logger = createLogger({
   level: process.env.LOG_LEVEL || 'info',
   format: combine(
     timestamp(),
-    prettyPrint()
+    json()
   ),
   transports: [new transports.Console()]
 });
