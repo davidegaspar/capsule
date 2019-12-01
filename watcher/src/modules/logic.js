@@ -1,6 +1,7 @@
 const logger = require('./logger');
 const { getHash, startRecording } = require('./utils')
 const { getData } = require('./http')
+const { MOTION_RECORDED, MOTION_IGNORED, putMetric } = require('./metrics')
 
 const API_KEY = process.env.API_KEY
 const RESOURCE_ID = process.env.RESOURCE_ID
@@ -15,40 +16,39 @@ const logic = async function(err, value) {
     logger.err(err)
   }
 
-  // cw
+  if (value) {
 
-  const config = await getData('https://exrxoe7id3.execute-api.us-east-1.amazonaws.com/Prod', API_KEY, RESOURCE_ID)
+    const config = await getData('https://exrxoe7id3.execute-api.us-east-1.amazonaws.com/Prod', API_KEY, RESOURCE_ID)
 
-  if (config.enabled) {
+    logger.info('Motion detected.')
 
-    if (value) {
+    let triggerTime = Date.now()
 
-      // cw 1
-      logger.info('Motion detected.')
+    if (!actionInProgress) {
 
-      let triggerTime = Date.now()
+      let secondActionInLessThanOneMinute = triggerTime - lastTriggerTime < oneMinute
 
-      if (!actionInProgress) {
+      if (secondActionInLessThanOneMinute) {
 
-        if (triggerTime - lastTriggerTime < oneMinute) {
+        logger.info('Motion detected again within 1min.')
 
-          logger.info('Motion detected again within 1min.')
+        if (config.enableRecording) {
+
           logger.info('Recording...')
+          putMetric(MOTION_RECORDED)
           actionInProgress = true
           startRecording(getHash(), () => {
 
             actionInProgress = false
             logger.info('Recording done.')
           })
+        } else {
+          putMetric(MOTION_IGNORED)
         }
       }
-
-      lastTriggerTime = triggerTime
-    } else {
-      // cw 0
     }
-  } else {
-    // cw -1
+
+    lastTriggerTime = triggerTime
   }
 }
 
