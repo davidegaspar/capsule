@@ -19,6 +19,7 @@
   "homepage": "https://github.com/davidegaspar/capsule#readme",
   "dependencies": {
     "aws-sdk": "^2.171.0",
+    "axios": "^0.19.0",
     "mkdirp": "^0.5.1",
     "onoff": "^5.0.0",
     "rimraf": "^2.6.2",

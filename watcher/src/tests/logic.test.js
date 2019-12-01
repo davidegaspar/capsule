@@ -1,11 +1,11 @@
 #!/usr/bin/env node
-const { logic } = require('./modules/logic')
+const { logic } = require('../modules/logic')
 
 //mock: startRecording
-setTimeout(() => {
-  actionInProgress = false
-  logger.info('Recording done.')
-}, 10000)
+// setTimeout(() => {
+//   actionInProgress = false
+//   logger.info('Recording done.')
+// }, 10000)
 
 // test: logic
 logic(null, 1)
