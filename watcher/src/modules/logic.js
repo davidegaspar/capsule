@@ -1,5 +1,6 @@
 const logger = require('./logger');
-const { getHash, startRecording } = require('./utils')
+const hash= require('./hash')
+const record = require('./record')
 const { getData } = require('./http')
 const { MOTION_RECORDED, MOTION_IGNORED, putMetric } = require('./metrics')
 
@@ -37,7 +38,7 @@ const logic = async function(err, value) {
           logger.info('Recording...')
           putMetric(MOTION_RECORDED)
           actionInProgress = true
-          startRecording(getHash(), () => {
+          record.start(hash.get(), () => {
 
             actionInProgress = false
             logger.info('Recording done.')
@@ -52,4 +53,4 @@ const logic = async function(err, value) {
   }
 }
 
-module.exports = { logic }
+module.exports = logic
