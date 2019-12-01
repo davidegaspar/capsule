@@ -3,7 +3,7 @@ const { PING, putMetric } = require('./metrics')
 
 const start = function (){
 
-  let pingTimeInSeconds = 60
+  let pingTimeInSeconds = 600
 
   logger.debug('ping')
   putMetric(PING)
