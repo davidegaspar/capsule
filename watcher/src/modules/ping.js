@@ -5,6 +5,9 @@ const start = function (){
 
   let pingTimeInSeconds = 60
 
+  logger.debug('ping')
+  putMetric(PING)
+
   setInterval(() => {
     logger.debug('ping')
     putMetric(PING)

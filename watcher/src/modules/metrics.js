@@ -1,7 +1,7 @@
 const AWS = require('aws-sdk');
 const logger = require('./logger');
 
-const cloudWatch = new AWS.CloudWatch();
+const cloudWatch = new AWS.CloudWatch({region: 'eu-west-1'});
 
 const PING = 0
 const MOTION_IGNORED = 1
