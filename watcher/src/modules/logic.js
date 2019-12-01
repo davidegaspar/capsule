@@ -21,7 +21,7 @@ const logic = async function(err, value) {
 
     const config = await getData('https://exrxoe7id3.execute-api.us-east-1.amazonaws.com/Prod', API_KEY, RESOURCE_ID)
 
-    logger.info('Motion detected.')
+    logger.debug('Motion detected.')
 
     let triggerTime = Date.now()
 
