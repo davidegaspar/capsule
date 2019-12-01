@@ -28,7 +28,6 @@ const logic = async function(err, value) {
     if (!actionInProgress) {
 
       let secondActionInLessThanOneMinute = (triggerTime - lastTriggerTime) < oneMinute
-      console.log('secondActionInLessThanOneMinute', secondActionInLessThanOneMinute)
 
       if (secondActionInLessThanOneMinute) {
 
