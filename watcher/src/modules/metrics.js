@@ -14,7 +14,7 @@ const putMetric = function (value) {
       {
         MetricName: 'status',
         Timestamp: new Date(),
-        Unit: Count,
+        Unit: 'count',
         Value: value,
       },
     ],
