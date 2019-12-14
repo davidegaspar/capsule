@@ -4,12 +4,13 @@ const onoff = require('onoff')
 const logger = require('./modules/logger')
 const record = require('./modules/record')
 const ping = require('./modules/ping')
-const logic = require('./modules/logic')
+const { logic, configPull } = require('./modules/logic')
 
 // setup
 let pir = new onoff.Gpio(15, 'in', 'both')
 record.setup()
 ping.start()
+configPull()
 
 // main
 pir.watch(logic)

@@ -4,12 +4,26 @@ const record = require('./record')
 const { getData } = require('./http')
 const { MOTION_RECORDED, MOTION_IGNORED, putMetric } = require('./metrics')
 
+const API_URL = 'https://exrxoe7id3.execute-api.us-east-1.amazonaws.com/Prod'
 const API_KEY = process.env.API_KEY
 const RESOURCE_ID = process.env.RESOURCE_ID
 const oneMinute = 60*1000
+const configPullTimeInSeconds = 1
 
 let actionInProgress = false
 let lastTriggerTime = 0
+let config = {}
+
+const configPull = function (){
+
+  config = await getData(API_URL, API_KEY, RESOURCE_ID)
+  logger.debug('configPull', config)
+
+  setInterval(() => {
+    config = await getData(API_URL, API_KEY, RESOURCE_ID)
+    logger.debug('configPull', config)
+  }, configPullTimeInSeconds * 1000)
+}
 
 const logic = async function(err, value) {
 
@@ -18,8 +32,6 @@ const logic = async function(err, value) {
   }
 
   if (value) {
-
-    const config = await getData('https://exrxoe7id3.execute-api.us-east-1.amazonaws.com/Prod', API_KEY, RESOURCE_ID)
 
     logger.debug('Motion detected.')
 
@@ -53,4 +65,4 @@ const logic = async function(err, value) {
   }
 }
 
-module.exports = logic
+module.exports = { logic, configPull }
