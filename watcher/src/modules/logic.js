@@ -8,7 +8,7 @@ const API_URL = 'https://exrxoe7id3.execute-api.us-east-1.amazonaws.com/Prod'
 const API_KEY = process.env.API_KEY
 const RESOURCE_ID = process.env.RESOURCE_ID
 const oneMinute = 60*1000
-const configPullTimeInSeconds = 60
+const configPullTimeInSeconds = 600
 
 let actionInProgress = false
 let lastTriggerTime = 0
