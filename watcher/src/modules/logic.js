@@ -19,7 +19,7 @@ const configPull = async function (){
   config = await getData(API_URL, API_KEY, RESOURCE_ID)
   logger.debug('configPull', config)
 
-  setInterval(() => {
+  setInterval(async () => {
     config = await getData(API_URL, API_KEY, RESOURCE_ID)
     logger.debug('configPull', config)
   }, configPullTimeInSeconds * 1000)
