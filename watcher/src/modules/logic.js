@@ -14,7 +14,7 @@ let actionInProgress = false
 let lastTriggerTime = 0
 let config = {}
 
-const configPull = function (){
+const configPull = async function (){
 
   config = await getData(API_URL, API_KEY, RESOURCE_ID)
   logger.debug('configPull', config)
