@@ -25,7 +25,7 @@ const configPull = async function (){
   }, configPullTimeInSeconds * 1000)
 }
 
-const logic = async function(err, value) {
+const logic = function(err, value) {
 
   if (err) {
     logger.err(err)
